@@ -87,8 +87,7 @@ const getProducts = async (sectorId) => {
     price: Number(product.price),
     laboratoryId:
       product.laboratoryId === null ? null : Number(product.laboratoryId),
-    supplierId:
-      product.supplierId === null ? null : Number(product.supplierId),
+    supplierId: product.supplierId === null ? null : Number(product.supplierId),
     sectorId: Number(product.sectorId),
     isMedicine: Boolean(product.isMedicine),
     isComplete: Boolean(product.isComplete),

@@ -32,7 +32,12 @@ const validateProduct = (product) => {
       return `${field} debe ser un número entero mayor a 0`;
     }
   }
-  for (const field of ["activeSubstance", "description", "grammage", "category"]) {
+  for (const field of [
+    "activeSubstance",
+    "description",
+    "grammage",
+    "category",
+  ]) {
     if (!isOptionalString(product[field])) {
       return `${field} debe ser texto`;
     }
