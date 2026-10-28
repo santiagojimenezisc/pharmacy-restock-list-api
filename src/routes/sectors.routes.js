@@ -186,4 +186,110 @@ router.get("/summary", sectorsController.getSummary);
  */
 router.get("/:id", sectorsController.getProducts);
 
+/**
+ * @swagger
+ * /api/sectors:
+ *   post:
+ *     summary: Agregar un sector
+ *     tags:
+ *       - Sectores
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Refrigerador
+ *               description:
+ *                 type: string
+ *                 example: Junto a la caja
+ *     responses:
+ *       201:
+ *         description: Sector agregado correctamente
+ *       400:
+ *         description: Datos no válidos
+ *       409:
+ *         description: Ya existe un anaquel con ese nombre
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.post("/", sectorsController.create);
+
+/**
+ * @swagger
+ * /api/sectors/{id}:
+ *   put:
+ *     summary: Actualizar un sector
+ *     description: Si no se envía la descripción, se conserva la actual.
+ *     tags:
+ *       - Sectores
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Anaquel de vitaminas
+ *               description:
+ *                 type: string
+ *                 example: Pasillo 2
+ *     responses:
+ *       200:
+ *         description: Sector actualizado correctamente
+ *       400:
+ *         description: Datos o ID no válidos
+ *       404:
+ *         description: Sector no encontrado
+ *       409:
+ *         description: Ya existe un anaquel con ese nombre
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.put("/:id", sectorsController.update);
+
+/**
+ * @swagger
+ * /api/sectors/{id}:
+ *   delete:
+ *     summary: Eliminar un sector sin productos
+ *     tags:
+ *       - Sectores
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     responses:
+ *       200:
+ *         description: Sector eliminado correctamente
+ *       400:
+ *         description: El ID del sector no es válido
+ *       404:
+ *         description: Sector no encontrado
+ *       409:
+ *         description: No se puede eliminar un anaquel con productos
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.delete("/:id", sectorsController.remove);
+
 module.exports = router;

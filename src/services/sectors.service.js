@@ -96,4 +96,45 @@ const getProducts = async (sectorId) => {
   }));
 };
 
-module.exports = { getAll, getSummary, getProducts };
+// La intercalación de la tabla ignora acentos y mayúsculas: "anaquel 1" choca con "Anaquel 1"
+const nameExists = async (name, excludeId = 0) => {
+  const rows = await pool.query(
+    "SELECT id FROM sectors WHERE name = ? AND id <> ?",
+    [name, excludeId],
+  );
+  return rows.length > 0;
+};
+
+const countProducts = async (id) => {
+  const [row] = await pool.query(
+    "SELECT COUNT(*) AS total FROM purchase_items WHERE sector_id = ?",
+    [id],
+  );
+  return Number(row.total);
+};
+
+const create = ({ name, description }) =>
+  pool.query("INSERT INTO sectors (name, description) VALUES (?, ?)", [
+    name,
+    description ?? null,
+  ]);
+
+// Si no llega descripción se conserva la actual, para poder solo renombrar
+const update = (id, { name, description }) =>
+  pool.query(
+    "UPDATE sectors SET name = ?, description = COALESCE(?, description) WHERE id = ?",
+    [name, description ?? null, id],
+  );
+
+const remove = (id) => pool.query("DELETE FROM sectors WHERE id = ?", [id]);
+
+module.exports = {
+  getAll,
+  getSummary,
+  getProducts,
+  nameExists,
+  countProducts,
+  create,
+  update,
+  remove,
+};
