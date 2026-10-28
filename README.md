@@ -9,6 +9,7 @@ Guarda los productos por comprar con su precio, laboratorio, proveedor y sector 
 - **Node.js** + **Express 5**
 - **MariaDB** con el driver `mariadb`
 - **Swagger** (`swagger-jsdoc` + `swagger-ui-express`) para documentar el API
+- **ESLint** + **Prettier** para revisar y formatear el código
 
 ## Cómo correrlo
 
@@ -35,32 +36,43 @@ npm start       # sin recarga
 
 La documentación interactiva queda en `http://localhost:3000/api-docs`.
 
+Revisar y formatear el código:
+
+```sh
+npm run lint            # busca errores con ESLint
+npm run format          # formatea todo con Prettier
+npm run format:check    # solo revisa el formato, sin cambiar archivos
+```
+
 > Esta versión no tiene autenticación: está pensada para uso local. Antes de publicarla en internet hay que agregar login o una API key.
 
-| Variable      | Descripción                     | Ejemplo     |
-| ------------- | ------------------------------- | ----------- |
-| `PORT`        | Puerto del servidor             | `3000`      |
+| Variable      | Descripción                      | Ejemplo                 |
+| ------------- | -------------------------------- | ----------------------- |
+| `PORT`        | Puerto del servidor              | `3000`                  |
 | `FRONT_URL`   | URL del front permitida por CORS | `http://localhost:5173` |
-| `DB_HOST`     | Host de MariaDB                 | `localhost` |
-| `DB_USER`     | Usuario de MariaDB              | `root`      |
-| `DB_PASSWORD` | Contraseña de MariaDB           |             |
-| `DB_NAME`     | Nombre de la base de datos      | `pharmacy`  |
+| `DB_HOST`     | Host de MariaDB                  | `localhost`             |
+| `DB_USER`     | Usuario de MariaDB               | `root`                  |
+| `DB_PASSWORD` | Contraseña de MariaDB            |                         |
+| `DB_NAME`     | Nombre de la base de datos       | `pharmacy`              |
 
 ## Endpoints
 
-| Método   | Ruta                                  | Descripción                                    |
-| -------- | ------------------------------------- | ---------------------------------------------- |
-| `GET`    | `/api/laboratories`                   | Lista de laboratorios                          |
-| `GET`    | `/api/suppliers`                      | Lista de proveedores                           |
-| `GET`    | `/api/sectors`                        | Lista de sectores (anaqueles)                  |
-| `GET`    | `/api/sectors/summary`                | Total de productos y pendientes por sector     |
-| `GET`    | `/api/sectors/:id`                    | Productos de un sector                         |
-| `GET`    | `/api/products-to-buy`                | Todos los productos por comprar                |
-| `POST`   | `/api/purchase-items`                 | Agregar un producto                            |
-| `PUT`    | `/api/products-to-buy/:id`            | Actualizar un producto                         |
-| `PATCH`  | `/api/products-to-buy/:id/complete`   | Marcar un producto como comprado               |
-| `PATCH`  | `/api/products-to-buy/:id/incomplete` | Marcar un producto como pendiente              |
-| `DELETE` | `/api/products-to-buy/:id`            | Borrar un producto                             |
+| Método   | Ruta                                  | Descripción                                |
+| -------- | ------------------------------------- | ------------------------------------------ |
+| `GET`    | `/api/laboratories`                   | Lista de laboratorios                      |
+| `GET`    | `/api/suppliers`                      | Lista de proveedores                       |
+| `GET`    | `/api/sectors`                        | Lista de sectores (anaqueles)              |
+| `GET`    | `/api/sectors/summary`                | Total de productos y pendientes por sector |
+| `GET`    | `/api/sectors/:id`                    | Productos de un sector                     |
+| `POST`   | `/api/sectors`                        | Agregar un sector                          |
+| `PUT`    | `/api/sectors/:id`                    | Actualizar un sector                       |
+| `DELETE` | `/api/sectors/:id`                    | Borrar un sector sin productos             |
+| `GET`    | `/api/products-to-buy`                | Todos los productos por comprar            |
+| `POST`   | `/api/purchase-items`                 | Agregar un producto                        |
+| `PUT`    | `/api/products-to-buy/:id`            | Actualizar un producto                     |
+| `PATCH`  | `/api/products-to-buy/:id/complete`   | Marcar un producto como comprado           |
+| `PATCH`  | `/api/products-to-buy/:id/incomplete` | Marcar un producto como pendiente          |
+| `DELETE` | `/api/products-to-buy/:id`            | Borrar un producto                         |
 
 ## Estructura
 
@@ -83,4 +95,4 @@ database/
 
 - [ ] Unificar las rutas de productos bajo un solo nombre
 - [ ] Respuestas con formato consistente (tipos y `tags` como arreglo)
-- [ ] Pruebas automatizadas y linter
+- [ ] Pruebas automatizadas

@@ -24,6 +24,8 @@ app.use("/api/suppliers", suppliersRoutes);
 app.use("/api/sectors", sectorsRoutes);
 app.use("/api", productsRoutes);
 
+// Express reconoce el manejador de errores por sus 4 parámetros, aunque no use next
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error(err);
 
