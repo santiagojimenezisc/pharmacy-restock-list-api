@@ -10,6 +10,11 @@ module.exports = [
       globals: globals.node,
     },
   },
+  // Vitest solo se puede importar con import, así que las pruebas son módulos ES
+  {
+    files: ["tests/**"],
+    languageOptions: { sourceType: "module" },
+  },
   // Va al final: apaga las reglas de ESLint que chocan con Prettier
   prettier,
 ];
